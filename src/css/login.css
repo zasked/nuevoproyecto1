@@ -1,0 +1,14 @@
+.contenedormain{
+    display: flex;
+    height: 82vh;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6em;
+    box-sizing: border-box;
+    
+}
+.cajadeBoton{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
