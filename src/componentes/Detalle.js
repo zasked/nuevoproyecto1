@@ -5,6 +5,7 @@ import axios from "axios";
 
 
 
+
 export function Detalle(){
     //con esto tengo el token y el id 
 
@@ -44,9 +45,6 @@ export function Detalle(){
     }, [pelisID]);
 
 
-  
-
-
 
     return(
     <>
@@ -54,33 +52,30 @@ export function Detalle(){
 
         {!pelisData && <>   <div className="d-flex justify-content-center">
                                 <div className="spinner-grow" role="status">
-                                    <span className="sr-only">uff</span>
+                                    <span className="sr-only">No se encontro la pelicula</span>
                                 </div>
                             </div> 
                         </>}
-            {pelisData && <>
+            {pelisData && 
+                <>
 
-
-                    <h2>Detalle de la Pelicula</h2>
-                    <div className="row">
-                    <div className="col-4">
-                    <img className=" img-fluid" src={`https://image.tmdb.org/t/p/w500/${pelisData.poster_path}`} alt="Poster"/>
+                    <div className=" card mb-0 " style={{ maxWidth: "100%"}} >
+                        <div className="row g-0">
+                            <div className="col-md-4 d-flex justify-content-center">
+                                <img src={`https://image.tmdb.org/t/p/w500/${pelisData.poster_path}`} className="img-fluid rounded-start" alt="..." />
+                            </div>
+                            <div className="col-md-8">
+                                <div className="card-body">
+                                    <h5 className="card-title" style={{ color: "white"}}>{pelisData.title}</h5>
+                                    <p className="card-text" style={{ color: "white"}}>{pelisData.overview}</p>
+                                    <p className="card-text"  ><small style={{ color: "white"}}>{pelisData.release_date}</small></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-8">
-                        <h5>{pelisData.title}</h5>
-                        <h5>{pelisData.release_date}</h5>
-                        <h5>{pelisData.overview}</h5>
-                        <h5>Generos</h5>
-                        <ul>
-                            {pelisData.genres.map(generos => <li key={generos.id}>{generos.name}</li>)}
-                        
-                        </ul>
-                    </div>
-                    </div>
-
-
-            
-            </>
+                 
+                
+                </>
             }
 
 

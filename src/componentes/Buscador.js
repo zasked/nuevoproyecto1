@@ -1,14 +1,12 @@
 import {  useNavigate, Navigate } from "react-router-dom"
 import swAlert from '@sweetalert/with-react';
-import { useEffect, useState } from "react";
+
 
 
 
 
 export function Buscador() {
 
-
-    let token = sessionStorage.getItem("token");
     const navigate = useNavigate();
 
 
@@ -37,24 +35,33 @@ export function Buscador() {
             );
             e.currentTarget.keyword.value= "";
             navigate(`/resultados?keyword=${keyword}`)
+            console.log("3")
             }
 
     }
+
+    let token = sessionStorage.getItem("token")
 //fin del evento
 
     return(
         <>
-        {!token ? <Navigate to="/"/>:
-        <form className="d-flex align-items-center px-4" onSubmit={submitHandler}>
-            <label className="form-label mb-0 mx-1">
-                <input className="form-control  " type="text" name="keyword" placeholder="escriba una palabra"/>
-            </label>
-                <button className="btn btn-primary px-3"  type="submit" >BUSCAR</button>
-                
-        </form>
-
-
-
-        }</>
+            {!token ? <Navigate to="/"/>:<>
+            <form className="d-flex align-items-center px-4 buscador" onSubmit={submitHandler}>
+                <label className="form-label mb-0 mx-1">
+                    <input className="form-control  " type="text" name="keyword" placeholder="escriba una palabra"/>
+                </label>
+                    <button 
+                        className="btn btn-primary px-3"  
+                        type="submit" 
+                        style={{ backgroundColor: "#8C00FF" }} >
+                            BUSCAR
+                    </button>
+                    
+            </form></>}
+        
+        
+        
+        
+        </>
     )
 }

@@ -1,35 +1,43 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-
+import swAlert from '@sweetalert/with-react';
 import '../css/login.css';
 
 
 
-
+ 
 export function Login(e){
-    const navigate = useNavigate();   
+  
        
    // e.prevent.default()
     
     const submitHandler = e =>{
+        
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        const regetEmail =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        const regetEmail = new RegExp(`^(([^<>()[\\]\\.,;:\\s@"]+(\\.[^<>()[\\]\\.,;:\\s@"]+)*)|(".+"))@(([^<>()[\\]\\.,;:\\s@"]+\\.)+[^<>()[\\]\\.,;:\\s@"]{2,})$`, 'i');
+
         console.log(regetEmail.test(email));
         if (email==="" || password==="" ) {
             //los campos n pueden esta vacios
-            return(console.log("los campos no pueden estar vacios"))           
+            swAlert(
+                <h1>Los campos no pueden estar vacios</h1>)           
         }
-        if (email!=="" && !regetEmail.test(email)) {
+        else if (email!=="" && !regetEmail.test(email)) {
             //debe colocar direccion  valida
-            return(console.log("deben colocar un email valido"))
+            swAlert(
+                <h1>deben colocar un correo valido</h1>)
+            
         }
-        if (email!=="challenge@alkemy.org" || password!=="react") {
+        else if (email!=="challenge@alkemy.org" || password!=="react") {
             //debe ingresar los datos correctamente
-            return(
-                console.log("email o constraseña incorrecta"))
+          
+                swAlert(
+                    <h1>email o constraseña incorrecta</h1>)
+                
+                
         }
         //si comprueba esto  luego de esto entra
 
@@ -41,10 +49,15 @@ export function Login(e){
             navigate("/listado")
             
         }
-            )
+        
          
-    }
+    )
+    .catch(error =>console.log(error)
+
+    )}
     let token =  sessionStorage.getItem("token")
+    const navigate = useNavigate();
+  
     return(
         
             <>
@@ -68,6 +81,7 @@ export function Login(e){
 
                             <input type="submit" className=" btn btn-info"  ></input>
                             </div>
+                            
                         </div>
                     
                     </form>

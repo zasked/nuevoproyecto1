@@ -1,8 +1,17 @@
 footer{
     display: flex;
     justify-content: space-around;
-    background-color:#F4E6E6;
+    background-color: #292929;
     height: 2em;
-    align-items: center;
+
     margin-top: auto;
+    margin-bottom: 0;
+
+}
+footer p{
+height: 100%;
+display: flex;
+align-items: center;
+margin: 0;
+padding: 0;
 }

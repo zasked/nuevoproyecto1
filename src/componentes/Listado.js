@@ -1,18 +1,16 @@
-//import { useNavigate } from "react-router-dom";
-//import { useEffect} from "react";
 import { Link, Navigate } from "react-router-dom"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import '../css/listado.css';
 
 
-
-
+import favorito from '../logos/favoritos.png'
 
 export function Listado (props){
-console.log(props)
+
 
     const [movieList, setMovieList] = useState(["----"]);
+
 
         let token = sessionStorage.getItem("token") 
         useEffect(() => {
@@ -20,38 +18,24 @@ console.log(props)
             axios.get(endPoint)
             .then(resp =>{ 
                 const apiData = resp.data
-                setMovieList(apiData.results)})
+                setMovieList(apiData.results)
+   
+            })
+                
                 .catch(error => {
                     console.log(error)
+        
                 })
 
                 //estas comillas del useEffect  
-            },[ setMovieList]);
-console.log()
-
-
-    
-
-   
-     //  const navigate = useNavigate();
-  
-  
-    /* useEffect(() => {
- 
-  
-    const token = localStorage.getItem("token")
-    console.log(token)
-
-    if (token === null) {
-        navigate("/")
-    }
-   }, []);*/
-
+        },[]);
 
 
     return(
+        <>
+            {!token ? <Navigate to="/"/>:
             <>
-                {!token ? <Navigate to="/"/>:<>
+
 
             
                 <div className="row" >
@@ -61,16 +45,29 @@ console.log()
                     movieList.map((pelis, i) => {
                         return ( 
                             <div className="col-3" key={i}>
-                            <div className="card my-3 img-fluid"   style={{ width: '18rem' }}  >
+                            <div className="card my-3 img-fluid"   style={{ width: '15rem' }}  >
                             
                                 <img className="card-img-top img-fluid"
                                      src={`https://image.tmdb.org/t/p/w500/${pelis.poster_path}`}
                                      alt="Card cap"
+                                     onError={(e) => {
+                                        e.target.onerror = null; // Prevent infinite fallback loop
+                                        e.target.src = "/path/to/fallback-image.jpg"; // Set fallback image path
+                                    }}
+
                                 />
-                                <button className="favourite-btn" 
+                                
+                                <button className="favourite-btn"  
                                         onClick={props.activar} 
-                                        data-movie = {pelis.id}   
-                                />
+                                        data-movie = {pelis.id}
+                                        data-bs-toggle="tooltip"
+                                        title="Agregarlo a Favoritos" 
+                                       
+                                ><img src={favorito} 
+                                className="img-fluid"
+                                height="30" 
+                                alt="favorito">
+                                </img></button>
                                 
 
                                 <div className="card-body">
@@ -79,12 +76,12 @@ console.log()
                                         {pelis.title?pelis.title.substring(0,50):null}
                                     </h5>
 
-                                    <p className="card-text">{pelis.title?pelis.overview.substring(0,100):null}  
+                                    <p className="card-text mb-4" >{pelis.title?pelis.overview.substring(0,50):null}... 
                                     </p>
 
                                     <div className="contenedorboton">
                                         <Link to={`/detalle?pelisID=${pelis.id}`} 
-                                            className="btn btn-primary botontarjeta" >Go somewhere
+                                            className="btn btn-primary botontarjeta" >mas detalle
                                         </Link>
 
                                     </div>
@@ -95,7 +92,7 @@ console.log()
                     } )}
                 </div>
             </>}
-            </>
+        </>
 
-        )
+    )
 }

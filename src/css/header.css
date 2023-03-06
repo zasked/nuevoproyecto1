@@ -3,12 +3,10 @@ header{
     max-width: 100%;
     min-width: 100%;
     display: block;
-    background-color: rgb(19, 8, 8);
     height: 3.5rem;
-    position: fixed;
-    z-index: 1;
-
-    
+    background-color: #292929;
+    color: #ffffff;
+      
 
 }
 label{
@@ -48,4 +46,11 @@ header nav .card-img-top{
 a{
     text-decoration: none;
     color: none;
+}
+.favoritos-count{
+    margin-right: 10000px;
+}
+.text-white{
+    background-color: #8C00FF;
+    color: #fff;
 }

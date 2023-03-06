@@ -9,12 +9,36 @@ import { Footer } from './componentes/Footer';
 import { Detalle } from './componentes/Detalle';
 import { Resultados } from './componentes/Resultados';
 import { Favoritos } from './componentes/Favoritos';
+import { useEffect, useState } from "react"
 //style
 
 import './css/app.css';
 import './css/modal.css';
+import './css/listado.css';
+
 
 function App() {
+
+
+  //controlo la sesion
+
+
+
+
+  const [favoritos, setFavoritos] = useState(["---"])
+
+  useEffect(() => {
+      const favInLocal = localStorage.getItem("fav")
+    // console.log("es estooooo", favInLocal)
+     if(favInLocal!==null){
+      const favsArray = JSON.parse(favInLocal)
+      setFavoritos(favsArray)
+     }
+  }, []);
+
+
+
+
 
   const removeOrAdd= (evento) =>{
     //obtengo lo que tengo en el local y si no hay nada genero el array
@@ -61,14 +85,19 @@ function App() {
     if(!estaLaMovie){
       tempMoviesFavs.push(movieData)
       localStorage.setItem("fav", JSON.stringify(tempMoviesFavs))
+      console.log("estoy pusheando la pelicula")
+      setFavoritos(tempMoviesFavs)
       
       
     }
     else{
       let quitarMovie =tempMoviesFavs.filter(oneMovie => {
-        return (oneMovie.id !== movieData.id && console.log("las pelicullas "))
+        return (oneMovie.id !== movieData.id )
+
       })
+
      localStorage.setItem("fav", JSON.stringify(quitarMovie))
+     setFavoritos(quitarMovie)
      // console.log("se elimino ", movieData.id, movieData.title )
 
     }
@@ -77,24 +106,22 @@ function App() {
 
   }
   //stringify pisa los datos
-
-
-
-  
-
-
-
 return(
     <>
-      <Header />
+      
+      <Header  />
       <Routes>
+      
         <Route exact path="/" element={ <Login  />} /> 
-        <Route path="/listado" element = {<Listado activar={removeOrAdd}/>}/>
+        <Route exact path="/listado" element = {<Listado  className="listado-component" activar={removeOrAdd}/>}/>
         <Route path="/detalle" element={<Detalle />}/>
         <Route path="/resultados" element={<Resultados />}/> 
-        <Route path="/favoritos" element={<Favoritos />}/> 
+        <Route exact path="/favoritos" element={<Favoritos favoritos={favoritos} activar={removeOrAdd}/>}/> 
+    
       </Routes>
+
       <Footer/>
+
     </>
 
   )

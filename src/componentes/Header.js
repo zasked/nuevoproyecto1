@@ -1,77 +1,82 @@
 import { Link } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 import node from '../logos/node.png'
 //import '../css/header.css';
 import { Buscador } from "./Buscador.js";
 
 
-//<img className="card-img-top img-fluid" src={node} alt="Card image cap"/>
-
-/*
-<div class="container-fluid">
-<Link className="nav-link active" aria-current="page"  to={"/"}>Home</Link>
-
-
-    <Link className="nav-link active" aria-current="page"  to={"/"}>Home</Link>
-    <Link className="nav-link active" aria-current="page" to={"/listado"}>Listado</Link>
-    <Link className="nav-link active" aria-current="page" to={"/favoritos"}>Favoritos</Link>
-
-
-
-<div class="navbar-collapse">
-<div class="navbar-nav">
-    <Link className="nav-link active" aria-current="page"  to={"/"}>Home</Link>
-    <Link className="nav-link active" aria-current="page" to={"/listado"}>Listado</Link>
-    <Link className="nav-link active" aria-current="page" to={"/favoritos"}>Favoritos</Link>
-
-
-</div>
-
-</div>
-<Buscador></Buscador>
-</div>
-
-
-
-*/
-
 
 export function Header() {
+
+    const navigate = useNavigate();
+    const salirSesion = () => {
+        sessionStorage.clear();
+        navigate("/");
+ 
+    };
+
+
+
+    let token = sessionStorage.getItem("token")
+      
+
+
+
+
     return(
-        <header>
+        <header className="position-sticky" style={{width:"100%"}}>
 
 
-            <nav class="navbar navbar-dark bg-dark">
+            <nav className="navbar  bg-dark">
                 
-            <div class="container-fluid">
+            <div className="container-fluid">
            
-                <ul class="nav ">
-                    <a class="navbar-brand" href="#">
+                <ul className="nav ">
+                    <div className="navbar-brand" href="#">
                         <img src={node} width="30" 
                         height="30" 
-                        class="d-inline-block align-top" 
+                        className="d-inline-block align-top" 
                         alt="IMAGEN DE NODE">
                         </img>
-                    </a>
+                    </div>
                    
-                    <li class="nav-item">
-                        <Link class="nav-link" 
+                    <li className="nav-item">
+                        <Link className="nav-link" 
                             to={"/"}>Home
                         </Link>
                     </li>
-                    <li class="nav-item">
-                        <Link class="nav-link" 
+                    <li className="nav-item">
+                        <Link className="nav-link" 
                             to={"/listado"}>Listado
                         </Link>
                     </li>
-                    <li class="nav-item">
-                        <Link class="nav-link" 
+                    <li className="nav-item">
+                        <Link className="nav-link" 
                             to={"/favoritos"}>Favoritos
                         </Link>
                     </li>
+                   
+                    {token  && 
+                        <li className="nav-item ml-auto">
+                            <button className="btn btn-primary px-3 text-white"
+                                    style={{ backgroundColor: "#8C00FF" }} 
+                                    onClick={salirSesion}>
+                            Salir
+                            </button>
+                           
+                           
+                        </li>
+                        }
+                    
                 </ul>
-                <Buscador/>
+                <li className="nav-item d-flex  align-items-center favoritos-count ml-5 contadorFavorito">
+                                    
+                             
+                    </li>
+            
+                    {token && <Buscador/>}
                 </div>
-
+                
             </nav>
             
         </header>
